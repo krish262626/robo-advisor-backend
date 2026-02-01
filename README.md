@@ -71,7 +71,9 @@ Response Example:
   ]
 }
 
-## 🧠 Business Logic
+---
+
+**## 🧠 Business Logic**
 
 ### ⭐ Default Price
 If a stock price is not provided, the system defaults it to **$100**.
