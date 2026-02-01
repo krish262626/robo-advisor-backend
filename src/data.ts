@@ -11,6 +11,7 @@ export interface Order {
   itemId: string;
   type: string;
   userName?: string;
+  currency: string;
   stock: string;
   amount: number;
   shares: number;

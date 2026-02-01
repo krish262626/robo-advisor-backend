@@ -4,6 +4,8 @@
  *   post:
  *     summary: Update decimal precision for shares
  *     description: Sets how many decimal places are used when calculating the number of shares.
+ *     tags:
+ *       - Configs
  *     requestBody:
  *       required: true
  *       content:
@@ -31,6 +33,8 @@
  *   get:
  *     summary: Get current decimal precision
  *     description: Returns the current decimal precision used for share calculations.
+ *     tags:
+ *       - Configs
  *     responses:
  *       200:
  *         description: Current decimal precision

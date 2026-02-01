@@ -4,6 +4,8 @@
  *   get:
  *     summary: Get all historic orders
  *     description: Returns all previous orders. Optional query parameters to filter by stock symbol, userName, idempotencyKey, orderId, or status.
+ *     tags:
+ *       - Orders
  *     parameters:
  *       - in: query
  *         name: stock
@@ -63,6 +65,8 @@
  *                       userName:
  *                         type: string
  *                       stock:
+ *                         type: string
+  *                       currency:
  *                         type: string
  *                       amount:
  *                         type: number

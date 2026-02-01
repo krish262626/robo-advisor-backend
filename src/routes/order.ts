@@ -2,8 +2,13 @@
  * @swagger
  * /order:
  *   post:
- *     summary: Place buy or sell orders for a model portfolio
- *     description: Calculates amount and number of shares for each stock based on portfolio weights and current stock price.
+ *     summary: Place a buy or sell order for a model portfolio
+ *     description: >
+ *       Accepts a portfolio-based order request and calculates the allocated
+ *       amount and number of shares per stock. Orders placed on non-market days
+ *       are scheduled for the next market open day.
+ *     tags:
+ *       - Orders
  *     requestBody:
  *       required: true
  *       content:
@@ -18,70 +23,93 @@
  *             properties:
  *               userName:
  *                 type: string
- *                 example: "user123"
+ *                 example: saikrishna
  *                 description: Optional user identifier
  *               type:
  *                 type: string
  *                 enum: [buy, sell]
- *                 example: buy
+ *                 example: sell
  *               amount:
  *                 type: number
- *                 example: 100
+ *                 example: 2300.543
  *               portfolio:
  *                 type: array
+ *                 description: Portfolio allocation details
  *                 items:
  *                   type: object
+ *                   required:
+ *                     - stock
+ *                     - weight
  *                   properties:
  *                     stock:
  *                       type: string
- *                       example: AAPL
+ *                       example: TSPL
  *                     weight:
  *                       type: number
- *                       example: 0.6
+ *                       description: Percentage allocation (0–100)
+ *                       example: 100
  *                     price:
  *                       type: number
- *                       example: 105
+ *                       description: Optional stock price, defaults to 100 if not provided
+ *                       example: 106
  *               idempotencyKey:
  *                 type: string
- *                 example: "f3a8b7c4-9d2e-4d9b-a7d1-123456789abc"
- *                 description: Unique key prevent duplicate orders
+ *                 example: "5382519-5"
+ *                 description: Unique key to prevent duplicate order submissions
  *     responses:
  *       200:
- *         description: Order calculation successful
+ *         description: Order accepted and processed successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 itemId:
- *                   type: string
+ *                 orderId:
+ *                   type: number
+ *                   example: 2
  *                 userName:
  *                   type: string
+ *                   example: saikrishna
  *                 status:
  *                   type: string
- *                   example: executed
+ *                   example: accepted
  *                 executionDate:
  *                   type: string
+ *                   format: date
+ *                   example: 2026-02-02
+ *                 idempotencyKey:
+ *                   type: string
+ *                   example: "5382519-5"
  *                 orders:
  *                   type: array
  *                   items:
  *                     type: object
  *                     properties:
+ *                       itemId:
+ *                         type: string
+ *                         example: f72b6339-ce81-4cf9-9be6-13cc36f2b215
  *                       stock:
  *                         type: string
+ *                         example: TSPL
+ *                       currency:
+ *                         type: string
+ *                         example: USD
  *                       amount:
  *                         type: number
+ *                         example: 2300.543
  *                       shares:
  *                         type: number
+ *                         example: 21.7032
  *                       price:
  *                         type: number
+ *                         example: 106
+ *                       timestamp:
+ *                         type: string
+ *                         format: date-time
+ *                         example: 2026-02-01T08:47:46.357Z
  *       400:
- *         description: Invalid request
- *       409:
- *         description: Duplicate order detected
+ *         description: Invalid request payload
  */
-
-// src/routes/order.ts
 import { Router } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { getExecutionDate } from "../utils/helper";
@@ -135,6 +163,7 @@ router.post("/", (req, res) => {
       itemId: uuidv4(),
       type,
       userName,
+      currency: 'USD',
       stock: stock.stock,
       amount: stockAmount,
       shares,
@@ -159,6 +188,7 @@ router.post("/", (req, res) => {
     orders: resultOrders.map((o) => ({
       itemId: o.itemId,
       stock: o.stock,
+      currency: o.currency,
       amount: o.amount,
       shares: o.shares,
       price: o.price,
