@@ -32,12 +32,13 @@ Built using **Node.js, TypeScript, and Express**, with a focus on clean architec
 | Logging | Lightweight custom middleware |
 
 ---
+
 ## 🔗 API Endpoints
 
 ### Create Order
-POST /order
+**POST /order**
 
-Request Example:
+#### Request Example
 ```json
 {
   "userName": "user123",
@@ -52,7 +53,9 @@ Request Example:
   ],
   "idempotencyKey": "f3a8b7c4-9d2e-4d9b-a7d1-123456789abc"
 }
-Response Example:
+```
+Response Example
+```json
 {
   "orderId": 2,
   "userName": "saikrishna",
@@ -70,29 +73,26 @@ Response Example:
     }
   ]
 }
+```
 
----
-
-**## 🧠 Business Logic**
-
+## 🧠 Business Logic
 ### ⭐ Default Price
-If a stock price is not provided, the system defaults it to **$100**.
+If a stock price is not provided, the system defaults it to $100.
 
 ### ⭐ Quantity Calculation
-- Amount per stock = (percentage / 100) × total amount  
-- Quantity = allocated amount / stock price  
-- Decimal precision is configurable
+Amount per stock = (percentage / 100) × total amount
+
+Quantity = allocated amount / stock price
+
+Decimal precision is configurable
 
 ### ⭐ Market Scheduling
-- Orders placed on **Saturday or Sunday** are scheduled for the **next Monday**
-- Markets are considered open only on weekdays
+Orders placed on Saturday or Sunday are scheduled for the next Monday
 
----
+Markets are considered open only on weekdays
 
 ## 🛠 Installation & Running
-
-### 1. Clone the repository
-```bash
+1. Clone the repository
 git clone https://github.com/krish262626/robo-advisor-backend.git
 cd robo-advisor-backend
 2. Install dependencies
@@ -101,20 +101,17 @@ npm install
 npm run dev
 Server runs on:
 
-http://localhost:3000
-🧪 Testing Recommendations
+**http://localhost:3000**
+
+## 🧪 Testing Recommendations
 Although not required for this assessment, the following tests can be added:
 
 Portfolio allocation calculations
-
 Market day logic
-
 Validation and error scenarios
-
 Frameworks like Jest or Supertest can be used.
 
-📌 Production-Level Improvements
-The following enhancements would be added in a real production setup:
+## 📌 Production-Level Improvements
 
 🔹 Database Integration
 Example: PostgreSQL / MongoDB
@@ -132,7 +129,7 @@ Centralized monitoring and observability (Prometheus / Grafana)
 These were intentionally scoped out to keep the assessment focused on
 core business logic and API design, as no infrastructure setup was required.
 
-📌 Assumptions
+## 📌 Assumptions
 ✔ In-memory storage is acceptable
 ✔ Default stock price is used when not provided
 ✔ Decimal precision is configurable
