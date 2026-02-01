@@ -1,38 +1,99 @@
 # Robo Advisor Backend
 
-A backend service for a simple robo-advisor order management system.  
-Built with **Node.js / TypeScript** to demonstrate API design, flexible portfolio allocation, market day handling, and robust backend patterns.
+A backend API service for a simple **robo-advisor order management system**.  
+This service accepts investment orders, splits them into portfolio allocations, calculates share quantities, and handles next market day scheduling.
+
+Built using **Node.js, TypeScript, and Express**, with a focus on clean architecture and clarity.
 
 ---
 
-## 📌 Overview
+## 📌 Features
 
-This service provides REST endpoints to:
-
-1. Create a portfolio order with split allocation  
-2. Fetch historic orders  
-
-It correctly:
-- Allocates funds based on % shares in portfolio
-- Handles variable stock price (default $100 if not provided)
-- Calculates quantity based on config decimal precision
-- Schedules execution only on market open days (Mon–Fri)
-- Logs response time for each API call
+✔ Create portfolio orders with allocation split  
+✔ Fetch historic orders  
+✔ In-memory storage (as per assessment requirement)  
+✔ Market open day handling (Mon–Fri only)  
+✔ Configurable decimal precision for quantities  
+✔ Request response-time logging via middleware  
+✔ Designed with production-readiness in mind  
 
 ---
 
-## 📁 API Endpoints
+## 📦 Tech Stack
 
-### 📌 POST `/orders`
-Create and submit a new portfolio order.
+| Layer | Technology |
+|------|-----------|
+| Language | TypeScript |
+| Server | Express.js |
+| Runtime | Node.js |
+| ID Generation | uuid |
+| Storage | In-memory (Array) |
+| Dev Tooling | nodemon |
+| Logging | Lightweight custom middleware |
 
-**Request**
-```json
-{
-  "orderType": "BUY",
-  "amount": 100,
-  "portfolio": [
-    { "symbol": "AAPL", "percentage": 60, "price": 150 },
-    { "symbol": "TSLA", "percentage": 40 }
-  ]
-}
+---
+
+## 🧠 Business Logic
+
+### ⭐ Default Price
+If a stock price is not provided, the system defaults it to **$100**.
+
+### ⭐ Quantity Calculation
+- Amount per stock = (percentage / 100) × total amount  
+- Quantity = allocated amount / stock price  
+- Decimal precision is configurable
+
+### ⭐ Market Scheduling
+- Orders placed on **Saturday or Sunday** are scheduled for the **next Monday**
+- Markets are considered open only on weekdays
+
+---
+
+## 🛠 Installation & Running
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/krish262626/robo-advisor-backend.git
+cd robo-advisor-backend
+2. Install dependencies
+npm install
+3. Run in development mode
+npm run dev
+Server runs on:
+
+http://localhost:3000
+🧪 Testing Recommendations
+Although not required for this assessment, the following tests can be added:
+
+Portfolio allocation calculations
+
+Market day logic
+
+Validation and error scenarios
+
+Frameworks like Jest or Supertest can be used.
+
+📌 Production-Level Improvements
+The following enhancements would be added in a real production setup:
+
+🔹 Database Integration
+Example: PostgreSQL / MongoDB
+Value: Enables data persistence, indexing, and scalable querying.
+
+🔹 Logging & Monitoring
+For this assessment, a lightweight response-time logger is implemented.
+
+In a production environment, this can be extended with:
+
+Structured logging (Winston / Pino)
+
+Centralized monitoring and observability (Prometheus / Grafana)
+
+These were intentionally scoped out to keep the assessment focused on
+core business logic and API design, as no infrastructure setup was required.
+
+📌 Assumptions
+✔ In-memory storage is acceptable
+✔ Default stock price is used when not provided
+✔ Decimal precision is configurable
+✔ Market days exclude weekends
