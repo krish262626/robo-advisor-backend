@@ -113,21 +113,21 @@ Frameworks like Jest or Supertest can be used.
 
 ## 📌 Production-Level Improvements
 
-🔹 Database Integration
-Example: PostgreSQL / MongoDB
+🔹 **Authentication & User Context**  
+Example: JWT-based authentication  
+Value: Securely identifies users, allows linking orders to specific users, and enables user-specific order history and access control.
+
+🔹**Database Integration**  
+Example: PostgreSQL / MongoDB  
 Value: Enables data persistence, indexing, and scalable querying.
 
-🔹 Logging & Monitoring
-For this assessment, a lightweight response-time logger is implemented.
+🔹 **Logging & Monitoring**  
+For this assessment, a lightweight response-time logger is implemented.  
+In a production environment, this can be extended with:  
+- Structured logging (Winston / Pino)  
+- Centralized monitoring and observability (Prometheus / Grafana)  
 
-In a production environment, this can be extended with:
-
-Structured logging (Winston / Pino)
-
-Centralized monitoring and observability (Prometheus / Grafana)
-
-These were intentionally scoped out to keep the assessment focused on
-core business logic and API design, as no infrastructure setup was required.
+These were intentionally scoped out to keep the assessment focused on core business logic and API design, as no infrastructure setup was required.
 
 ## 📌 Assumptions
 ✔ In-memory storage is acceptable
