@@ -32,6 +32,44 @@ Built using **Node.js, TypeScript, and Express**, with a focus on clean architec
 | Logging | Lightweight custom middleware |
 
 ---
+## 🔗 API Endpoints
+
+### Create Order
+POST /order
+
+Request Example:
+```json
+{
+  "userName": "user123",
+  "type": "buy",
+  "amount": 100,
+  "portfolio": [
+    {
+      "stock": "AAPL",
+      "weight": 0.6,
+      "price": 105
+    }
+  ],
+  "idempotencyKey": "f3a8b7c4-9d2e-4d9b-a7d1-123456789abc"
+}
+Response Example:
+{
+  "orderId": 2,
+  "userName": "saikrishna",
+  "status": "accepted",
+  "executionDate": "2026-02-02",
+  "idempotencyKey": "5382519-5",
+  "orders": [
+    {
+      "itemId": "f72b6339-ce81-4cf9-9be6-13cc36f2b215",
+      "stock": "TSPL",
+      "amount": 2300.543,
+      "shares": 21.7032,
+      "price": 106,
+      "timestamp": "2026-02-01T08:47:46.357Z"
+    }
+  ]
+}
 
 ## 🧠 Business Logic
 
