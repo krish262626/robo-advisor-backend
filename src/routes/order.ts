@@ -16,7 +16,7 @@
  *               - portfolio
  *               - idempotencyKey
  *             properties:
- *               userId:
+ *               userName:
  *                 type: string
  *                 example: "user123"
  *                 description: Optional user identifier
@@ -55,7 +55,7 @@
  *               properties:
  *                 itemId:
  *                   type: string
- *                 userId:
+ *                 userName:
  *                   type: string
  *                 status:
  *                   type: string
@@ -86,12 +86,10 @@ import { Router } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { getExecutionDate } from "../utils/helper";
 import { PortfolioStock, Order, DEFAULT_PRICE, decimalPrecision, orders, idempotencyMap, generateOrderId } from "../data"
-import { timeStamp } from "node:console";
-
 const router = Router();
 
 router.post("/", (req, res) => {
-  const { type, amount, portfolio, userId, idempotencyKey } = req.body;
+  const { type, amount, portfolio, userName, idempotencyKey } = req.body;
 
   // --- Basic Validation ---
   if (!type || !["buy", "sell"].includes(type.toLowerCase())) {
@@ -129,19 +127,20 @@ router.post("/", (req, res) => {
   const orderId = generateOrderId();
   portfolio.forEach((stock: PortfolioStock) => {
     const stockPrice = stock.price ?? DEFAULT_PRICE;
-    const stockAmount = parseFloat((amount * stock.weight/100).toFixed(2));
+    const stockAmount = parseFloat((amount * stock.weight/100).toFixed(decimalPrecision));
     const shares = parseFloat((stockAmount / stockPrice).toFixed(decimalPrecision));
 
     const order: Order = {
       orderId,
       itemId: uuidv4(),
       type,
-      userId,
+      userName,
       stock: stock.stock,
       amount: stockAmount,
       shares,
       price: stockPrice,
       timestamp: new Date().toISOString(),
+      executionDate,
       status,
       idempotencyKey,
     };
@@ -153,7 +152,7 @@ router.post("/", (req, res) => {
   // --- Response ---
   const response = {
     orderId,
-    userId,
+    userName,
     status,
     executionDate,
     idempotencyKey,
@@ -163,7 +162,7 @@ router.post("/", (req, res) => {
       amount: o.amount,
       shares: o.shares,
       price: o.price,
-      timeStamp: o.timestamp
+      timestamp: o.timestamp
     }))
   }
   idempotencyMap.set(idempotencyKey, response);

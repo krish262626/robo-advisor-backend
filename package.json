@@ -1,26 +1,12 @@
 {
   "name": "robo-advisor-backend",
-  "lockfileVersion": 3,
-  "requires": true,
-  "packages": {},
   "version": "1.0.0",
-  "description": "A backend service for a simple robo-advisor order management system.  \r Built with **Node.js / TypeScript** to demonstrate API design, flexible portfolio allocation, market day handling, and robust backend patterns.",
+  "description": "Backend service for a simple robo-advisor order management system built with Node.js / TypeScript",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch src --ext ts,json --exec npx ts-node src/index.ts",
     "start": "npx ts-node src/index.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/krish262626/robo-advisor-backend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/krish262626/robo-advisor-backend/issues"
-  },
-  "homepage": "https://github.com/krish262626/robo-advisor-backend#readme",
   "dependencies": {
     "express": "^5.2.1",
     "swagger-jsdoc": "^6.2.8",
@@ -30,8 +16,7 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.1.0",
-    "@types/swagger-jsdoc": "^6.0.4",
-    "@types/swagger-ui-express": "^4.1.8",
+    "@types/uuid": "^10.0.0",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"

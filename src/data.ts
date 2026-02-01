@@ -10,12 +10,13 @@ export interface Order {
   orderId: number;
   itemId: string;
   type: string;
-  userId?: string;
+  userName?: string;
   stock: string;
   amount: number;
   shares: number;
   price: number;
   timestamp: string;
+  executionDate: string;
   status: string;
   idempotencyKey: string;
 }
